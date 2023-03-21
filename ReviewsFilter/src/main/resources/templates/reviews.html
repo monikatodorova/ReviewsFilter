@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reviews</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="main pt-5 pb-5">
+            <div class="row">
+            <div class="col-md-6">
+                <div>
+                    <h3>Filter reviews</h3>
+                    <form action="/reviews" method="GET">
+
+                        <div class="form-group">
+                            <label for="highestRatingFirst">Order by rating:</label>
+                            <select name="highestRatingFirst" id="highestRatingFirst" class="form-control">
+                                <option value="true" selected>Highest First</option>
+                                <option value="false">Lowest First</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="minimumRating">Minimum rating:</label>
+                            <select name="minimumRating" id="minimumRating" class="form-control">
+                                <option value="1" selected>1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="newestFirst">Order by date:</label>
+                            <select name="newestFirst" id="newestFirst" class="form-control">
+                                <option value="true" selected>Newest First</option>
+                                <option value="false">Oldest First</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="textPriority">Prioritize by text:</label>
+                            <select name="textPriority" id="textPriority" class="form-control">
+                                <option value="true" selected>Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                        </div>
+
+                        <button id="submit" type="submit" class="btn btn-primary">Filter</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div>
+                    <h3>Reviews</h3>
+                    <table class="table table-striped" style="border: 1px solid #eee;">
+                        <thead>
+                        <tr>
+                            <th scope="col">Text</th>
+                            <th scope="col">Rating</th>
+                            <th scope="col">Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="review : ${reviews}">
+                            <td th:text="${review.getReviewText()}"></td>
+                            <td th:text="${review.getRating()}"></td>
+                            <td th:text="${#temporals.format(review.getReviewCreatedOn(),'yyyy-MM-dd hh:mm:ss')}"></td>
+                        </tr>
+                        </tbody>
+                    </table >
+                </div>
+            </div>
+
+        </div>
+        </div>
+    </div>
+</body>
+</html>
